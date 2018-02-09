@@ -1,32 +1,12 @@
-import React, { Component } from 'react'
-import { Todo } from 'components'
-import { getTodos } from 'api'
+import React, { Fragment } from 'react'
+import { Todos } from 'components'
 import logo from 'img/logo.png'
 
-export default class AppContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            todos: []
-        }
-        this.fetchTodos = this.fetchTodos.bind(this)
-    }
+const AppContainer = () => (
+    <Fragment>
+        <img src={logo} alt="Logo" />
+        <Todos />
+    </Fragment>
+)
 
-    fetchTodos() {
-        getTodos()
-            .then(todos => this.setState({ todos }))
-    }
-
-    componentWillMount() {
-        this.fetchTodos()
-    }
-
-    render() {
-        return (
-            <div>
-                <img src={logo} alt="Logo" />
-                <Todo todos={this.state.todos} onFetchTodos={this.fetchTodos} />
-            </div>
-        )
-    }
-}
+export default AppContainer

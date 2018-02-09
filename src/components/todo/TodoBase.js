@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import TodoCounts from './TodoCounts'
+import React, { Component, Fragment } from 'react'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import { addTodo, removeTodo, updateTodo } from 'api'
 
-export class Todo extends Component {
-    constructor(props) {
-        super(props)
+export default class TodoBase extends Component {
+    constructor() {
+        super()
         this.handleAddTodo = this.handleAddTodo.bind(this)
         this.handleUpdateStatus = this.handleUpdateStatus.bind(this)
         this.handleUpdateTitle = this.handleUpdateTitle.bind(this)
@@ -32,8 +31,7 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)
     }
 
-    handleAddTodo(event, value) {
-        event.preventDefault()
+    handleAddTodo(value) {
         return addTodo({ value })
             .then(this.props.onFetchTodos)
     }
@@ -44,15 +42,13 @@ export class Todo extends Component {
     }
 
     render() {
-        const { todos } = this.props
         return (
-            <div>
-                <TodoCounts todos={todos} />
+            <Fragment>
                 <TodoFormAdd
                     onAddTodo={this.handleAddTodo}
                 />
                 <ul className="todo-list">
-                    {todos.map(todo => (
+                    {this.props.todos.map(todo => (
                         <TodoItem
                             key={todo.id}
                             todo={todo}
@@ -62,7 +58,7 @@ export class Todo extends Component {
                         />
                     ))}
                 </ul>
-            </div>
+            </Fragment>
         )
     }
 }
