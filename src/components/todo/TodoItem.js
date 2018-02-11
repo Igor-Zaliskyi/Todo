@@ -1,9 +1,9 @@
 import React from 'react'
 
-const TodoItem = ({ todo, onUpdateStatus, onUpdateTitle, onRemoveTodo }) => {
+const TodoItem = ({ todo, onUpdateStatus, onUpdateTitle, ActionButton }) => {
     let label
     return (
-        <li>
+        <li className={todo.isChecked ? 'active' : ''}>
             <input type="checkbox"
                    checked={todo.isChecked}
                    onChange={() => onUpdateStatus(todo.id, !todo.isChecked)} />
@@ -11,7 +11,7 @@ const TodoItem = ({ todo, onUpdateStatus, onUpdateTitle, onRemoveTodo }) => {
                    suppressContentEditableWarning="true"
                    ref={labelEl => label = labelEl}
                    onBlur={() => onUpdateTitle(todo.id, label.textContent)}>{todo.value}</label>
-            <button onClick={() => onRemoveTodo(todo.id)}>X</button>
+            <ActionButton id={todo.id}/>
         </li>
     )
 }

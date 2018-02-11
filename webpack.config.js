@@ -9,7 +9,7 @@ const PATHS = {
 module.exports = {
     context: PATHS.src,
     devtool: 'source-map',
-    entry:   './app.js',
+    entry:   './index.js',
     output:  {
         path:     PATHS.dist,
         filename: '[name].bundle.js'
@@ -23,6 +23,7 @@ module.exports = {
                     loader:  'babel-loader',
                     options: {
                         presets: [
+                            'stage-0',
                             'es2015',
                             'react'
                         ]
@@ -78,9 +79,9 @@ module.exports = {
 //   },
 //   module: {
 //     rules: [
-//       { 
-//         test: /\.js$/, 
-//         exclude: /(node_modules|bower_components)/, 
+//       {
+//         test: /\.js$/,
+//         exclude: /(node_modules|bower_components)/,
 //         use: {
 //           loader: "babel-loader",
 //           options: {

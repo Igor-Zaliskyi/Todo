@@ -8,11 +8,11 @@ export default class TodoWithCounts extends Component {
     }
 
     render() {
-        const { todos, onFetchTodos } = this.props
+        const { todos, onFetchTodos, ActionButton } = this.props
         return (
             <Fragment>
                 <TodoCounts todos={todos} />
-                <TodoBase todos={todos} onFetchTodos={onFetchTodos} />
+                <TodoBase todos={todos} onFetchTodos={onFetchTodos} ActionButton={ActionButton} />
             </Fragment>
         )
     }

@@ -1,5 +1,9 @@
-import Todos from './Todos'
+import TodoBase from './TodoBase'
+import TodoWithCounts from './TodoWithCounts'
+import TodoFormAdd from './TodoFormAdd'
 
 export {
-    Todos
+    TodoBase,
+    TodoWithCounts,
+    TodoFormAdd
 }
