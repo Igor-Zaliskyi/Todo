@@ -3,9 +3,7 @@ import * as actions from 'actions'
 import * as api from 'api'
 import {
     collectFinishFetching,
-    collectFullfiled,
     collectPending,
-    collectRejected,
     getArchive,
     getNotArchive,
     removeItemFromList,
@@ -103,13 +101,14 @@ export default function todo(state = initialState, { type, payload }) {
         case types.GET_TODOS_REJECTED:
             finishFethcing = collectFinishFetching(state, 'isFetchingTodo')
         case types.GET_TODOS_FULLFILED:
-            return collectFullfiled(finishFethcing, 'isFetchedTodo', {
+            return finishFethcing({
+                isFetchedTodo:   true,
                 todos:           payload,
                 todosNotArchive: getNotArchive(payload),
                 todosArchive:    getArchive(payload)
             })
         case types.GET_TODOS_REJECTED:
-            return collectRejected(finishFethcing, {
+            return finishFethcing({
                 isFailTodo: payload
             })
 
@@ -119,12 +118,13 @@ export default function todo(state = initialState, { type, payload }) {
         case types.ADD_TODO_REJECTED:
             finishFethcing = collectFinishFetching(state, 'isFetchingAddTodo')
         case types.ADD_TODO_FULLFILED:
-            return collectFullfiled(finishFethcing, 'isFetchedTodo', {
+            return finishFethcing({
+                isFetchedTodo:   true,
                 todos:           [...state.todos, payload],
                 todosNotArchive: [...state.todosNotArchive, payload],
             })
         case types.ADD_TODO_REJECTED:
-            return collectRejected(finishFethcing, {
+            return finishFethcing({
                 isFailAddTodo: payload
             })
 
@@ -135,14 +135,15 @@ export default function todo(state = initialState, { type, payload }) {
             finishFethcing = collectFinishFetching(state, 'isFetchingUpdateTodo')
         case types.UPDATE_TODO_FULLFILED: {
             const todos = updateItemInList(payload, state.todos)
-            return collectFullfiled(finishFethcing, 'isFetchedUpdateTodo', {
-                todos:           todos,
-                todosNotArchive: getNotArchive(todos),
-                todosArchive:    getArchive(todos)
+            return finishFethcing({
+                isFetchedUpdateTodo: true,
+                todos:               todos,
+                todosNotArchive:     getNotArchive(todos),
+                todosArchive:        getArchive(todos)
             })
         }
         case types.UPDATE_TODO_REJECTED:
-            return collectRejected(finishFethcing, {
+            return finishFethcing({
                 isFailUpdateTodo: payload
             })
 
@@ -153,13 +154,14 @@ export default function todo(state = initialState, { type, payload }) {
             finishFethcing = collectFinishFetching(state, 'isFetchingRemoveTodo')
         case types.REMOVE_TODO_FULLFILED: {
             const todos = removeItemFromList(payload, state.todos)
-            return collectFullfiled(finishFethcing, 'isFetchedRemoveTodo', {
-                todos:        todos,
-                todosArchive: getArchive(todos)
+            return finishFethcing({
+                isFetchedRemoveTodo: true,
+                todos:               todos,
+                todosArchive:        getArchive(todos)
             })
         }
         case types.REMOVE_TODO_REJECTED:
-            return collectRejected(finishFethcing, {
+            return finishFethcing({
                 isFailRemoveTodo: payload
             })
 
@@ -169,11 +171,12 @@ export default function todo(state = initialState, { type, payload }) {
         case types.GET_ARCHIVE_TODOS_REJECTED:
             finishFethcing = collectFinishFetching(state, 'isFetchingArchiveTodo')
         case types.GET_ARCHIVE_TODOS_FULLFILED:
-            return collectFullfiled(finishFethcing, 'isFetchedArchiveTodo', {
-                todosArchive: payload
+            return finishFethcing({
+                isFetchedArchiveTodo: true,
+                todosArchive:         payload
             })
         case types.GET_ARCHIVE_TODOS_REJECTED:
-            return collectRejected(finishFethcing, {
+            return finishFethcing({
                 isFailArchiveTodo: payload
             })
         // case types.GET_NOT_ARCHIVE_TODOS_PENDING:

@@ -3,18 +3,8 @@ export const collectPending = (state, pendingKey) => ({
     [pendingKey]: true
 })
 
-export const collectFinishFetching = (state, pendingKey) => ({
+export const collectFinishFetching = (state, pendingKey) => newState => ({
     ...state,
-    [pendingKey]: false
-})
-
-export const collectFullfiled = (state, fullfiledKey, payload) => ({
-    ...state,
-    [fullfiledKey]: true,
-    ...payload
-})
-
-export const collectRejected = (state, rejection) => ({
-    ...state,
-    ...rejection
+    [pendingKey]: false,
+    ...newState
 })
