@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import keydown, { Keys } from 'react-keydown';
 import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import { addTodo, removeTodo, updateTodo } from 'api'
+import { hendleValue } from './helpers/todoValue'
 
 export class Todo extends Component {
     constructor(props) {
@@ -20,7 +22,7 @@ export class Todo extends Component {
         })
     }
 
-    handleUpdateTitle(id, value) {
+    handleUpdateTitle(id, value, labValue) {
         return this.onUpdateTodo({
             id,
             value
@@ -32,19 +34,22 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)//?
     }
 
+
     handleAddTodo(event, value) {
         event.preventDefault()
-       if(value){
+        const handVal = hendleValue(value)
+        if(handVal.length){
             return addTodo({ value })
-                .then(this.props.onFetchTodos)
-       }
-       
+             .then(this.props.onFetchTodos)
+        }      
     }
 
     onUpdateTodo(todo) {
         return updateTodo(todo)
             .then(this.props.onFetchTodos)
     }
+
+    
 
     render() {
         const { todos } = this.props
@@ -62,6 +67,7 @@ export class Todo extends Component {
                             onUpdateStatus={this.handleUpdateStatus}
                             onUpdateTitle={this.handleUpdateTitle}
                             onRemoveTodo={this.handleRemoveTodo}
+                           
                         />
                     ))}
                 </ul>
