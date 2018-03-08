@@ -38,7 +38,7 @@ export class Todo extends Component {
     handleAddTodo(event, value) {
         event.preventDefault()
         const handVal = hendleValue(value)
-        if(handVal.length){
+        if(handVal){
             return addTodo({ value })
              .then(this.props.onFetchTodos)
         }      

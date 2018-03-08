@@ -1,4 +1,5 @@
-const hendleValue = (value) => Array.of(value)
-  .filter(todo => todo.match(/^[\d\wа-я]+$/gi))
-
+const hendleValue = (value = value.trim()) => value
+  .match(/^[\wа-яфві]+/i)
+  
 export {hendleValue}
+
