@@ -1,5 +1,6 @@
-const hendleValue = (value = value.trim()) => value
-  .match(/^[\wа-яфві]+/i)
-  
-export {hendleValue}
+const hendleValue = (value = value.trim()) =>
+  /^\S[^\-().^+%$&*@!><=-_/,%"':;]+$/g.test(value)
 
+export {
+  hendleValue
+}
