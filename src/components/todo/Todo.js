@@ -4,7 +4,7 @@ import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import { addTodo, removeTodo, updateTodo } from 'api'
-import { hendleValue } from './helpers/todoValue'
+import { validationInput } from './helpers'
 
 export class Todo extends Component {
     constructor(props) {
@@ -37,8 +37,8 @@ export class Todo extends Component {
 
     handleAddTodo(event, value) {
         event.preventDefault()
-        const handVal = hendleValue(value)
-        if(handVal){
+        const valueInput = validationInput(value)
+        if(valueInput){
             return addTodo({ value })
              .then(this.props.onFetchTodos)
         }      
