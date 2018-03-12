@@ -3,6 +3,7 @@ import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import { addTodo, removeTodo, updateTodo } from 'api'
+import { isValidValue } from './helpers'
 
 export class Todo extends Component {
     constructor(props) {
@@ -32,13 +33,13 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)
     }
 
-    handleAddTodo(event, value) {
+    handleAddTodo(event, value ) {
         event.preventDefault()
-       if(value){
-            return addTodo({ value })
-                .then(this.props.onFetchTodos)
-       }
-       
+        const trimmedValue = value.trim()
+        if (isValidValue(trimmedValue)) {
+           return  addTodo({ value: trimmedValue })          
+           .then(this.props.onFetchTodos) 
+        }
     }
 
     onUpdateTodo(todo) {
@@ -62,6 +63,7 @@ export class Todo extends Component {
                             onUpdateStatus={this.handleUpdateStatus}
                             onUpdateTitle={this.handleUpdateTitle}
                             onRemoveTodo={this.handleRemoveTodo}
+                           
                         />
                     ))}
                 </ul>
