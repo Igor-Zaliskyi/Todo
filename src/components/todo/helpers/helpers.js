@@ -1,8 +1,4 @@
-const isValidValue = value => {
-  const valueAddTrim = value.trim();
-  const testValue = /^[^().^+$&*@!><=-_/,%"'№:;#]+$/g.test(valueAddTrim)
+const isValidValue = value => /^[\wа-яії0-9\s]+$/i.test(value)
 
-  return testValue
-}
 
 export {isValidValue}

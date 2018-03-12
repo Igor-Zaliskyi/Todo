@@ -35,9 +35,9 @@ export class Todo extends Component {
 
     handleAddTodo(event, value ) {
         event.preventDefault()
-        const addTrim = value.trim()
-        if (isValidValue(value)) {
-           return  addTodo({ value: addTrim })          
+        const trimmedValue = value.trim()
+        if (isValidValue(trimmedValue)) {
+           return  addTodo({ value: trimmedValue })          
            .then(this.props.onFetchTodos) 
         }
     }
