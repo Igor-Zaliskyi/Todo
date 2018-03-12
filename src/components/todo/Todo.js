@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import keydown, { Keys } from 'react-keydown';
 import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import { addTodo, removeTodo, updateTodo } from 'api'
-import { validationInput } from './helpers'
+import { isValidValue } from './helpers'
 
 export class Todo extends Component {
     constructor(props) {
@@ -22,7 +21,7 @@ export class Todo extends Component {
         })
     }
 
-    handleUpdateTitle(id, value, labValue) {
+    handleUpdateTitle(id, value) {
         return this.onUpdateTodo({
             id,
             value
@@ -31,25 +30,22 @@ export class Todo extends Component {
 
     handleRemoveTodo(todoId) {
         return removeTodo(todoId)
-            .then(this.props.onFetchTodos)//?
+            .then(this.props.onFetchTodos)
     }
 
-
-    handleAddTodo(event, value) {
+    handleAddTodo(event, value ) {
         event.preventDefault()
-        const valueInput = validationInput(value)
-        if(valueInput){
-            return addTodo({ value })
-             .then(this.props.onFetchTodos)
-        }      
+        const addTrim = value.trim()
+        if (isValidValue(value)) {
+           return  addTodo({ value: addTrim })          
+           .then(this.props.onFetchTodos) 
+        }
     }
 
     onUpdateTodo(todo) {
         return updateTodo(todo)
             .then(this.props.onFetchTodos)
     }
-
-    
 
     render() {
         const { todos } = this.props
