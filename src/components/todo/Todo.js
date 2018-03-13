@@ -37,8 +37,8 @@ export class Todo extends Component {
         event.preventDefault()
         const trimmedValue = value.trim()
         if (isValidValue(trimmedValue)) {
-           return  addTodo({ value: trimmedValue })          
-           .then(this.props.onFetchTodos) 
+           return  addTodo({ value: trimmedValue })
+           .then(this.props.onFetchTodos)
         }
     }
 
@@ -55,6 +55,20 @@ export class Todo extends Component {
                 <TodoFormAdd
                     onAddTodo={this.handleAddTodo}
                 />
+                <div class="wrapper-filters">
+                    <b>Filters:</b>
+                    <ul class="list-status-filters">
+                        <li>
+                            <button class="active">All</button>
+                        </li>
+                        <li>
+                            <button>Done</button>
+                        </li>
+                        <li>
+                            <button>Undone</button>
+                        </li>
+                    </ul>
+                </div>
                 <ul className="todo-list">
                     {todos.map(todo => (
                         <TodoItem
@@ -63,7 +77,7 @@ export class Todo extends Component {
                             onUpdateStatus={this.handleUpdateStatus}
                             onUpdateTitle={this.handleUpdateTitle}
                             onRemoveTodo={this.handleRemoveTodo}
-                           
+
                         />
                     ))}
                 </ul>
