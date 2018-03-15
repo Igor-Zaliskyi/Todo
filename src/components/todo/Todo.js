@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
+import TodoFilters from './TodoFilters'
 import { addTodo, removeTodo, updateTodo } from 'api'
 import { isValidValue } from './helpers'
 
@@ -12,6 +13,8 @@ export class Todo extends Component {
         this.handleUpdateStatus = this.handleUpdateStatus.bind(this)
         this.handleUpdateTitle = this.handleUpdateTitle.bind(this)
         this.handleRemoveTodo = this.handleRemoveTodo.bind(this)
+        this.heandleTodoDone = this.heandleTodoDone.bind(this);
+        this.heandleTodoUndone = this.heandleTodoUndone.bind(this);
     }
 
     handleUpdateStatus(id, isChecked) {
@@ -37,8 +40,8 @@ export class Todo extends Component {
         event.preventDefault()
         const trimmedValue = value.trim()
         if (isValidValue(trimmedValue)) {
-           return  addTodo({ value: trimmedValue })          
-           .then(this.props.onFetchTodos) 
+            return  addTodo({ value: trimmedValue })
+                .then(this.props.onFetchTodos)
         }
     }
 
@@ -47,26 +50,38 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)
     }
 
+    heandleTodoDone() {
+        console.log('Done');
+    }
+
+    heandleTodoUndone() {
+        console.log('Undone');
+    }
+   
     render() {
-        const { todos } = this.props
+        const { todos } = this.props;
+
+        const todoSubmit = (
+            <ul className="todo-list">
+                {todos.map(todo => (
+                    <TodoItem
+                        key={todo.id}
+                        todo={todo}
+                        onUpdateStatus={this.handleUpdateStatus}
+                        onUpdateTitle={this.handleUpdateTitle}
+                        onRemoveTodo={this.handleRemoveTodo}
+                    />
+                ))}
+            </ul>
+        )
         return (
             <div>
                 <TodoCounts todos={todos} />
                 <TodoFormAdd
                     onAddTodo={this.handleAddTodo}
                 />
-                <ul className="todo-list">
-                    {todos.map(todo => (
-                        <TodoItem
-                            key={todo.id}
-                            todo={todo}
-                            onUpdateStatus={this.handleUpdateStatus}
-                            onUpdateTitle={this.handleUpdateTitle}
-                            onRemoveTodo={this.handleRemoveTodo}
-                           
-                        />
-                    ))}
-                </ul>
+                <TodoFilters todos={todos} todoDone={this.heandleTodoDone} todoUndone={this.heandleTodoUndone}/>
+                {todoSubmit} 
             </div>
         )
     }
