@@ -3,8 +3,8 @@ import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import TodoFilters from './TodoFilters'
+import  TodoDone  from './TodoDone'
 import { addTodo, removeTodo, updateTodo } from 'api'
-import { isValidValue } from './helpers'
 
 export class Todo extends Component {
     constructor(props) {
@@ -13,8 +13,7 @@ export class Todo extends Component {
         this.handleUpdateStatus = this.handleUpdateStatus.bind(this)
         this.handleUpdateTitle = this.handleUpdateTitle.bind(this)
         this.handleRemoveTodo = this.handleRemoveTodo.bind(this)
-        this.heandleTodoDone = this.heandleTodoDone.bind(this);
-        this.heandleTodoUndone = this.heandleTodoUndone.bind(this);
+        
     }
 
     handleUpdateStatus(id, isChecked) {
@@ -38,6 +37,7 @@ export class Todo extends Component {
 
     handleAddTodo(event, value ) {
         event.preventDefault()
+        const isValidValue = value => /^[\wа-яії0-9\s]+$/i.test(value)
         const trimmedValue = value.trim()
         if (isValidValue(trimmedValue)) {
             return  addTodo({ value: trimmedValue })
@@ -50,38 +50,60 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)
     }
 
-    heandleTodoDone() {
-        console.log('Done');
-    }
-
-    heandleTodoUndone() {
-        console.log('Undone');
-    }
-   
     render() {
         const { todos } = this.props;
 
-        const todoSubmit = (
+        const activeTodo = (
             <ul className="todo-list">
-                {todos.map(todo => (
+                {this.props.todos.map(todo => (
                     <TodoItem
-                        key={todo.id}
-                        todo={todo}
-                        onUpdateStatus={this.handleUpdateStatus}
-                        onUpdateTitle={this.handleUpdateTitle}
-                        onRemoveTodo={this.handleRemoveTodo}
-                    />
-                ))}
-            </ul>
+                    key={todo.id}
+                    todo={todo}
+                    onUpdateStatus={this.handleUpdateStatus}
+                    onUpdateTitle={this.handleUpdateTitle}
+                    onRemoveTodo={this.handleRemoveTodo}
+                    /> ))}
+            </ul> 
         )
+
+        const doneTodo = (
+            <ul className="todo-list">
+                {this.props.todos.map(todo => (
+                    <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    onUpdateTitle={this.handleUpdateTitle}
+                    onRemoveTodo={this.handleRemoveTodo}
+                    /> ))
+                    .filter(todo => console.log(todo.isChecked))
+                }
+            </ul> 
+        )
+
+        const unDoneTodo = (
+            <ul className="todo-list">
+                {this.props.todos.map(todo => (
+                    <TodoItem
+                    key={todo.id}
+                    todo={todo}
+                    onUpdateTitle={this.handleUpdateTitle}
+                    onRemoveTodo={this.handleRemoveTodo}
+                    /> ))
+                    .filter(todo => !todo.isChecked)
+                }
+            </ul> 
+        )
+       
         return (
             <div>
                 <TodoCounts todos={todos} />
                 <TodoFormAdd
                     onAddTodo={this.handleAddTodo}
                 />
-                <TodoFilters todos={todos} todoDone={this.heandleTodoDone} todoUndone={this.heandleTodoUndone}/>
-                {todoSubmit} 
+                <TodoFilters activeTodo={activeTodo}
+                             doneTodo={doneTodo}
+                             unDoneTodo={unDoneTodo}/>
+                {activeTodo}
             </div>
         )
     }

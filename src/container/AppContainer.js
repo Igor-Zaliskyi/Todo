@@ -25,7 +25,8 @@ export default class AppContainer extends Component {
         return (
             <div>
                 <img src={logo} alt="Logo" />
-                <Todo todos={this.state.todos} onFetchTodos={this.fetchTodos} />
+                <Todo todos={this.state.todos} 
+                      onFetchTodos={this.fetchTodos} />
             </div>
         )
     }
