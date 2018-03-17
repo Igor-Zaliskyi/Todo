@@ -3,7 +3,7 @@ import TodoCounts from './TodoCounts'
 import TodoFormAdd from './TodoFormAdd'
 import TodoItem from './TodoItem'
 import TodoFilters from './TodoFilters'
-import  TodoDone  from './TodoDone'
+import { filtersDone, filtersUnDone } from './helpers'
 import { addTodo, removeTodo, updateTodo } from 'api'
 
 export class Todo extends Component {
@@ -13,7 +13,11 @@ export class Todo extends Component {
         this.handleUpdateStatus = this.handleUpdateStatus.bind(this)
         this.handleUpdateTitle = this.handleUpdateTitle.bind(this)
         this.handleRemoveTodo = this.handleRemoveTodo.bind(this)
-        
+        this.heandleDaneTodos = this.heandleDaneTodos.bind(this)
+        this.heandleUnDoneTodos = this.heandleUnDoneTodos.bind(this)
+        this.state = {
+            filters: []
+        }
     }
 
     handleUpdateStatus(id, isChecked) {
@@ -37,9 +41,8 @@ export class Todo extends Component {
 
     handleAddTodo(event, value ) {
         event.preventDefault()
-        const isValidValue = value => /^[\wа-яії0-9\s]+$/i.test(value)
         const trimmedValue = value.trim()
-        if (isValidValue(trimmedValue)) {
+        if (/^[\wа-яії0-9\s]+$/i.test(trimmedValue)) {
             return  addTodo({ value: trimmedValue })
                 .then(this.props.onFetchTodos)
         }
@@ -50,60 +53,48 @@ export class Todo extends Component {
             .then(this.props.onFetchTodos)
     }
 
+    heandleDaneTodos(){
+        document.querySelector('.todo-list')
+            .style.display='none'
+        return this.setState({filters: filtersDone})
+    }
+
+    heandleUnDoneTodos() {
+        document.querySelector('.todo-list')
+            .style.visibility='hidden'
+        return this.setState({filters: filtersUnDone})
+    }
+
+
     render() {
         const { todos } = this.props;
-
-        const activeTodo = (
-            <ul className="todo-list">
-                {this.props.todos.map(todo => (
-                    <TodoItem
+        const { filters } = this.state;
+        const active = (
+            <ul className="todo-list" >
+            {todos.map(todo => (
+                <TodoItem
                     key={todo.id}
                     todo={todo}
                     onUpdateStatus={this.handleUpdateStatus}
                     onUpdateTitle={this.handleUpdateTitle}
                     onRemoveTodo={this.handleRemoveTodo}
-                    /> ))}
+                /> ))}
             </ul> 
         )
-
-        const doneTodo = (
-            <ul className="todo-list">
-                {this.props.todos.map(todo => (
-                    <TodoItem
-                    key={todo.id}
-                    todo={todo}
-                    onUpdateTitle={this.handleUpdateTitle}
-                    onRemoveTodo={this.handleRemoveTodo}
-                    /> ))
-                    .filter(todo => console.log(todo.isChecked))
-                }
-            </ul> 
-        )
-
-        const unDoneTodo = (
-            <ul className="todo-list">
-                {this.props.todos.map(todo => (
-                    <TodoItem
-                    key={todo.id}
-                    todo={todo}
-                    onUpdateTitle={this.handleUpdateTitle}
-                    onRemoveTodo={this.handleRemoveTodo}
-                    /> ))
-                    .filter(todo => !todo.isChecked)
-                }
-            </ul> 
-        )
-       
+            
         return (
             <div>
                 <TodoCounts todos={todos} />
                 <TodoFormAdd
                     onAddTodo={this.handleAddTodo}
                 />
-                <TodoFilters activeTodo={activeTodo}
-                             doneTodo={doneTodo}
-                             unDoneTodo={unDoneTodo}/>
-                {activeTodo}
+                <TodoFilters activeTodo={() => 
+                             this.setState({filters: active})}
+                             doneTodo={this.heandleDaneTodos}
+                             unDoneTodo={this.heandleUnDoneTodos}
+                             todos={todos}
+                />
+                {filters} {active}
             </div>
         )
     }

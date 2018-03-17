@@ -1,0 +1,61 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-active -S
+
+PATH: 
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Users\Dell\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Ruby24-x64\bin;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\Dell\AppData\Roaming\npm;C:\Users\Dell\AppData\Local\Yarn\bin;C:\Program Files\Heroku\bin;C:\Users\Dell\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Dell\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  8.6.0
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "test-site",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "build": "webpack",
+      "wds": "webpack-dev-server"
+    },
+    "dependencies": {
+      "react": "^16.2.0",
+      "react-dom": "^16.2.0"
+    },
+    "devDependencies": {
+      "babel-core": "^6.26.0",
+      "babel-loader": "^6.4.1",
+      "babel-preset-env": "^1.6.1",
+      "babel-preset-es2015": "^6.18.0",
+      "babel-preset-react": "^6.24.1",
+      "babel-preset-stage-0": "^6.24.1",
+      "css-loader": "^0.28.7",
+      "extract-text-webpack-plugin": "^3.0.2",
+      "html-loader": "^0.5.1",
+      "html-webpack-plugin": "^2.30.1",
+      "node-sass": "^4.7.2",
+      "sass-loader": "^6.0.6",
+      "style-loader": "^0.19.1",
+      "url-loader": "^0.6.2",
+      "webpack": "^3.10.0",
+      "webpack-dev-server": "^2.9.7"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com registry.yarnpkg.com:443
+      at errnoException (dns.js:53:10)
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
